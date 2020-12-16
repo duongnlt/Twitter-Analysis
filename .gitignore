@@ -3,3 +3,4 @@
 .vector_cache
 .vscode
 *.csv
+__pycache__
