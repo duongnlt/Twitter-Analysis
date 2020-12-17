@@ -44,6 +44,7 @@ services:
       - "9092"
     ports:
       - 9092:9092
+      - 19092:19092
     environment:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_HOST_NAME: kafka
@@ -51,6 +52,7 @@ services:
       KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://0.0.0.0:19092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      JMX_PORT: 9999
   kafka_manager:
     image: hlebalbau/kafka-manager:1.3.3.18
     container_name: kafka_manager
@@ -68,18 +70,23 @@ services:
     depends_on:
         - "zookeeper"
         - "kafka"
+
+
+
   pyspark:
-    image: jupyter/pyspark-notebook
+    build: .
     container_name: pyspark-notebook
     ports:
       - "8888:8888"
     volumes:
       - ./pyspark/:/home/jovyan/work/
+      - ./model/:/home/jovyan/work/model
     healthcheck:
       interval: 5s
       retries: 100 
     env_file:
       - ./hadoop.env
+    restart: "no"
     # command: pip install tweepy kafka-python
   zeppelin: 
    image: dylanmei/zeppelin

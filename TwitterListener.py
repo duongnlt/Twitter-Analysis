@@ -7,12 +7,24 @@ from kafka import KafkaProducer, KafkaClient
 import config
 import time
 
-# import logging
-# logging.basicConfig(level=logging.INFO)
+import logging
+logging.basicConfig(level=logging.INFO)
 
 
 
 producer = KafkaProducer(bootstrap_servers=['localhost:19092'])
+
+def make_data(raw_data):
+    send_data = {}
+    send_data['user_id'] = raw_data['user']['id']
+    send_data['text'] = raw_data['text']
+    send_data['user_followers_count'] = raw_data['user']['followers_count']
+    send_data['place'] = raw_data['place']
+    send_data['location'] = raw_data['user']['location']
+    send_data['retweet_count'] = raw_data['retweet_count']
+    send_data['favorite_count'] = raw_data['favorite_count']
+    return json.dumps(send_data)
+
 #Stream Listener Class
 class TweetsListener(StreamListener):
 
@@ -20,7 +32,8 @@ class TweetsListener(StreamListener):
     #     # self.client_socket = csocket
     def on_data(self, data):
         data = json.loads(data)
-        future = producer.send(topic='Trump',value=data['text'].encode('utf-8'))
+        send_data = make_data(data)
+        future = producer.send(topic='Trump',value=str(send_data).encode('utf-8'))
         try:
 
             record_metadata = future.get(timeout=10)
@@ -29,7 +42,7 @@ class TweetsListener(StreamListener):
         except BaseException as e:
             print("Error %s" % str(e))
 
-        time.sleep(30)
+        time.sleep(10)
         return True
 
 
