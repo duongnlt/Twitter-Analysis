@@ -9,7 +9,7 @@ services:
       replicas: 1
     ports:
       - 9870:9870
-      
+     
     volumes:
       - hadoop_namenode:/hadoop/dfs/name
     environment:
@@ -22,7 +22,7 @@ services:
     # container_name: datanode
     restart: always
     deploy:
-      replicas: 3
+      replicas: 1
     volumes:
       - hadoop_datanode:/hadoop/dfs/data
     environment:
@@ -75,12 +75,30 @@ services:
       - "8888:8888"
     volumes:
       - ./pyspark/:/home/jovyan/work/
+    healthcheck:
+      interval: 5s
+      retries: 100 
     env_file:
       - ./hadoop.env
     # command: pip install tweepy kafka-python
-      
+  zeppelin: 
+   image: dylanmei/zeppelin
+   container_name: zeppelin
+   ports:
+    - 8080:8080
+   volumes:
+    - ./notebook:/opt/zeppelin/notebook
+   env_file:
+      - ./hadoop.env
+   environment:
+    CORE_CONF_fs_defaultFS: "hdfs://namenode:9000"
+    SPARK_MASTER: "pyspark://pyspark:7077"
+    # MASTER: "spark://spark-master:7077"
+    #SPARK_SUBMIT_OPTIONS: "--jars /opt/sansa-examples/jars/sansa-examples-spark-2016-12.jar"
+   depends_on:
+      - "pyspark"
+      - "namenode"
     
 volumes:
   hadoop_namenode:
   hadoop_datanode:
-  hadoop_historyserver:
