@@ -1,0 +1,17 @@
+{
+  "name": "streaming",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node stream.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "kafka-node": "^5.0.0",
+    "kafkajs": "^1.15.0",
+    "twitter-stream-channels": "^1.0.1"
+  }
+}
