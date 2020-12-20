@@ -88,7 +88,7 @@ services:
     # command: sh -c "pip install torch torchtext spacy && python -m spacy download en_core_web_md && python -m spacy link en_core_web_md en"
       
   nodejs:
-    build: .
+    build: ./streaming
     container_name: node-js
     
     volumes:
@@ -99,8 +99,8 @@ services:
     command: npm run dev
     ports: 
       - "80:8080"
-    networks: 
-      - app-network
+    # networks: 
+    #   - app-network
     depends_on: 
       - 'kafka'
     
@@ -109,6 +109,3 @@ volumes:
   hadoop_datanode:
   hadoop_historyserver:
 
-networks:
-  app-network:
-    driver: bridge

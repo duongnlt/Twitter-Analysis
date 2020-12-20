@@ -8,18 +8,7 @@ const producerTrump = new Producer(clientKafka)
 const producerBiden = new Producer(clientKafka)
 
 
-var offset = new Date().getTimezoneOffset();
-function pad(number, length){
-    var str = "" + number
-    while (str.length < length) {
-        str = '0'+str
-    }
-    return str
-}
-offset = ((offset<0? '+':'-')+ // Note the reversed sign!
-          pad(parseInt(Math.abs(offset/60)), 2)+
-          pad(Math.abs(offset%60), 2))
-console.log(offset);
+const rt = "RT @"
 
 
 
@@ -33,45 +22,53 @@ const stream = client.streamChannels({track:channels, language: 'en', tweet_mode
 
 stream.on('channels/trump',function(tweet){
 
-    const sendTweet = {
-        "time": tweet.created_at,
-        "user_id": tweet.user.id,
-        "text": tweet.text,
-        "user_followers_count": tweet.user.followers_count,
-        "place": tweet.place,
-        "location": tweet.user.location,
-        "retweet_count": tweet.retweet_count,
-        "favorite_count": tweet.favorite_count
+    if (tweet.text.indexOf(rt) === -1) {
+        const sendTweet = {
+            "time": tweet.created_at,
+            "user_id": tweet.user.id,
+            "text": tweet.text,
+            "user_followers_count": tweet.user.followers_count,
+            "place": tweet.place,
+            "location": tweet.user.location,
+            "retweet_count": tweet.retweet_count,
+            "favorite_count": tweet.favorite_count
 
-    }
-    const payloads = [{topic:'Trump',messages: sendTweet}]
-    // console.log(sendTweet)
+        }
+        const payloads = [{topic:'Trump',messages: JSON.stringify(sendTweet)}]
+        // console.log(typeof sendTweet)
 
-    if (producerTrump.ready) {
-        producerTrump.send(payloads, function (err, data) {
-            console.log(data);
-        });
+        if (producerTrump.ready) {
+            producerTrump.send(payloads, function (err, data) {
+                if (err) {
+                    console.log(err)
+                }
+                console.log(data);
+            });
+        }
     }
 });
 
+
 stream.on('channels/biden',function(tweet){
 
-    const sendTweet = {
-        "time": tweet.created_at,
-        "user_id": tweet.user.id,
-        "text": tweet.text,
-        "user_followers_count": tweet.user.followers_count,
-        "place": tweet.place,
-        "location": tweet.user.location,
-        "retweet_count": tweet.retweet_count,
-        "favorite_count": tweet.favorite_count
+    if (tweet.text.indexOf(rt) === -1) {
+        const sendTweet = {
+            "time": tweet.created_at,
+            "user_id": tweet.user.id,
+            "text": tweet.text,
+            "user_followers_count": tweet.user.followers_count,
+            "place": tweet.place,
+            "location": tweet.user.location,
+            "retweet_count": tweet.retweet_count,
+            "favorite_count": tweet.favorite_count
 
-    }
-    const payloads = [{topic:'Biden',messages: sendTweet}]
-    if (producerBiden.ready) {
-        producerBiden.send(payloads, function (err, data) {
-            console.log(data);
-        });
+        }
+        const payloads = [{topic:'Biden',messages: JSON.stringify(sendTweet)}]
+        if (producerBiden.ready) {
+            producerBiden.send(payloads, function (err, data) {
+                console.log(data);
+            });
+        }
     }
 });
 
@@ -88,8 +85,3 @@ stream.on('channels/biden',function(tweet){
 //    console.log(tweet.text);//any tweet with the keyword "javascript"
 //});
 
-setTimeout(function(){
-    // await producer.disconnect()
-    stream.stop();//closes the stream connected to Twitter
-	console.log('>stream closed after 100 seconds');
-},100000);
