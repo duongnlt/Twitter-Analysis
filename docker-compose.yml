@@ -88,9 +88,9 @@ services:
       - ./hadoop.env
     restart: "no"
     # command: pip install tweepy kafka-python
-  zeppelin: 
-   image: dylanmei/zeppelin
-   container_name: zeppelin
+  zeppelin1: 
+   build: './zeppelin'
+   container_name: zeppelin1
    ports:
     - 8080:8080
    volumes:
