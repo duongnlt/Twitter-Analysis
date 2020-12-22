@@ -9,8 +9,16 @@ const producerBiden = new Producer(clientKafka)
 
 
 const rt = "RT @"
+function checkTweet(text) {
+    const regExp = /[a-zA-Z]/g;
 
+    if (regExp.test(text) && ((text.split('@').length - 1) <= 2) && text.indexOf(rt) == -1) {
+        return true
+    }
 
+    return false
+
+}
 
 const client = new TwitterStreamChannels(credentials);
 const channels = {
@@ -22,7 +30,7 @@ const stream = client.streamChannels({track:channels, language: 'en', tweet_mode
 
 stream.on('channels/trump',function(tweet){
 
-    if (tweet.text.indexOf(rt) === -1) {
+    if (checkTweet(tweet.text) && tweet.created_at !== null) {
         const sendTweet = {
             "time": tweet.created_at,
             "user_id": tweet.user.id,
@@ -35,7 +43,6 @@ stream.on('channels/trump',function(tweet){
 
         }
         const payloads = [{topic:'Trump',messages: JSON.stringify(sendTweet)}]
-        // console.log(typeof sendTweet)
 
         if (producerTrump.ready) {
             producerTrump.send(payloads, function (err, data) {
@@ -51,7 +58,7 @@ stream.on('channels/trump',function(tweet){
 
 stream.on('channels/biden',function(tweet){
 
-    if (tweet.text.indexOf(rt) === -1) {
+    if (checkTweet(tweet.text) && tweet.created_at !== null) {
         const sendTweet = {
             "time": tweet.created_at,
             "user_id": tweet.user.id,

@@ -83,7 +83,6 @@ services:
       - ./model/:/home/jovyan/work/model
     env_file:
       - ./hadoop.env
-    restart: "no"
    
     # command: sh -c "pip install torch torchtext spacy && python -m spacy download en_core_web_md && python -m spacy link en_core_web_md en"
       
