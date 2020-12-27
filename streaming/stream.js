@@ -43,7 +43,6 @@ stream.on('channels/trump',function(tweet){
 
         }
         const payloads = [{topic:'Trump',messages: JSON.stringify(sendTweet)}]
-
         if (producerTrump.ready) {
             producerTrump.send(payloads, function (err, data) {
                 if (err) {
