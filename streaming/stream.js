@@ -8,9 +8,12 @@ const producerTrump = new Producer(clientKafka)
 const producerBiden = new Producer(clientKafka)
 
 
-const rt = "RT @"
 function checkTweet(text) {
+    if (text === null) {
+        return false
+    }
     const regExp = /[a-zA-Z]/g;
+    const rt = "RT @"
 
     if (regExp.test(text) && ((text.split('@').length - 1) <= 2) && text.indexOf(rt) == -1) {
         return true
@@ -19,6 +22,14 @@ function checkTweet(text) {
     return false
 
 }
+
+// function preprocessTweet(text) {
+
+// }
+
+
+
+
 
 const client = new TwitterStreamChannels(credentials);
 const channels = {

@@ -1,3 +1,3 @@
-FROM bde2020/spark-master:3.0.1-hadoop3.2
+FROM duonghust1919/spark-master
 
-RUN pip3 install textblob
+RUN pip3 install textblob tweet-preprocessor
