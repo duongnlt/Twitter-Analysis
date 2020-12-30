@@ -38,7 +38,7 @@ Execute this script to get your docker running
  ``` 
 
 
-Open Pyspark Notebook, run file **spark_streaming.ipynb** then **hadoop_stream.ipynb**
+Open Pyspark Notebook, run file **Streaming Tweets in Spark.ipynb** then **Streaming Tweets from Hadoop.ipynb**
 
 
 ## 3. Visualize
