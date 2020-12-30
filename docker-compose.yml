@@ -1,4 +1,6 @@
-version: "3.8"
+version: "3.6"
+
+
 
 services:
   namenode:
@@ -104,7 +106,7 @@ services:
   #   ports:
   #     - "8081:8081"
   #   environment:
-  #     - "SPARK_MASTER=spark://spark-master:7077"
+  #     - SPARK_MASTER=spark://spark-master:7077
   #     - SPARK_WORKER_CORES=2
   #     - SPARK_WORKER_MEMORY=512m
   #     - PYSPARK_PYTHON=/usr/bin/python3
@@ -140,14 +142,6 @@ services:
     depends_on: 
       - 'kafka'
 
-  # jupyterlab:
-  #   image: duonghust1919/jupyterlab
-  #   container_name: jupyterlab
-  #   ports:
-  #     - 8888:8888
-  #   volumes:
-  #     - ./pyspark:/home/joyvan/work
-
   spark-master:
     build: ./spark/master
     container_name: spark-master
@@ -181,6 +175,8 @@ services:
     depends_on:
       - spark-master
     
+
+
 volumes:
   hadoop_namenode:
   hadoop_datanode:

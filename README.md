@@ -10,19 +10,37 @@ First, please clone this repo
 git clone https://github.com/duong19/Twitter-Analysis.git
 ```
 
-Run this script to create environment (you need to install Miniconda or Anaconda first):
+Run this script
 
 ``` bash
 cd Twitter-Analysis
 
-conda create --name bigdata --file requirements.txt
+cd streaming
 
-conda activate bigdata
+npm install
+
 ```
-Then run notebook `TwitterModel.ipynb` to get your Pytorch model
+
 
 ## 2. Docker
 
-Run ` docker-compose up --build` to get your docker running
+Execute this script to get your docker running
+ ```
+ docker-compose up --build
+ ``` 
 
-Go to [this url](https://localhost:9870) to see your HDFS file system
+
+Open Pyspark Notebook, run file **spark_streaming.ipynb** then **hadoop_stream.ipynb**
+
+
+## 3. Visualize
+Run Flask server (make sure kafka has data first):
+```
+cd flask
+
+export FLASK_APP=app.py
+
+flask run
+```
+
+Go to [this url](https://localhost:5000) to see your graphs
