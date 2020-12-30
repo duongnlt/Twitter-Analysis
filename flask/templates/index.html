@@ -18,6 +18,7 @@
   </head>
   <body>
     <div>
+    <div style="display: inline-block;">
       <div class="row">
         <div class="chart-wrapper">
           <canvas id="trump-pie"></canvas>
@@ -32,8 +33,14 @@
         </div>
         <div class="chart-wrapper">
           <canvas id="biden-line"></canvas>
+          </div>
       </div>
-      <div class="row"></div>
+    </div>
+    <div style="float: right; margin-top: 300px;">
+      <div class="chart-wrapper">
+        <canvas id="bar-chart"></canvas>
+      </div>
+    </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <!--suppress JSUnresolvedLibraryURL -->
@@ -232,7 +239,44 @@
 
 
 
+            //bar chart
+            var barChartConfig = {
+              type:'bar',
+              data: {
+                labels: ['Negative', 'Neutral', 'Positive'],
+                datasets: [{
+                  label: 'Trump',
+                  backgroundColor: 'rgb(255, 99, 132)',
+                  data: []
+                }, {
+                  label: 'Biden',
+                  backgroundColor: 'rgb(75, 192, 192)',
+                  data: []
+                }]
+              },
+              options: {
+                title: {
+                  display: true,
+                  text: 'Trump vs Biden'
+                },
+                tooltips: {
+                  mode: 'index',
+                  intersect: false
+                },
+                responsive: true,
+                scales: {
+                  xAxes: [{
+                    stacked: true,
+                  }],
+                  yAxes: [{
+                    stacked: true
+                  }]
+                }
+              }
+            }
 
+            var barChartContext = document.getElementById('bar-chart').getContext('2d')
+            var barChart = new Chart(barChartContext, barChartConfig)
 
 
 
@@ -272,10 +316,14 @@
           trumpLineConfig.data.datasets[0].data.push(data.negative);
           trumpLineConfig.data.datasets[1].data.push(data.positive);
 
+
+          barChartConfig.data.datasets[0].data = temp
+
           trumpPie.update()
           // bidenPie.update()
           // bidenLineChart.update()
           trumpLineChart.update()
+          barChart.update()
         }
 
         sourceBiden.onmessage = function (event){
@@ -287,14 +335,19 @@
                 bidenLineConfig.data.datasets[1].data.shift()
           }
           var temp = [data.negative, data.neutral, data.positive]
+
           bidenLineConfig.data.labels.push(data.time);
           bidenLineConfig.data.datasets[0].data.push(data.negative);
           bidenLineConfig.data.datasets[1].data.push(data.positive);
 
+
+          barChartConfig.data.datasets[1].data = temp
+
+
           configBidenPie.data.datasets[0].data = temp
           bidenPie.update()
           bidenLineChart.update()
-
+          barChart.update()
         }
 
 

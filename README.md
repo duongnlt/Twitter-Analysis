@@ -2,6 +2,12 @@
 
 
 
+# Requirements
+This repo requires the following to run:
+- Node.js
+- Docker and docker-compose
+- Python
+---
 ## 1. Getting Started
 
 First, please clone this repo
@@ -14,6 +20,8 @@ Run this script
 
 ``` bash
 cd Twitter-Analysis
+
+pip install -r requirements.txt
 
 cd streaming
 
@@ -44,3 +52,5 @@ flask run
 ```
 
 Go to [this url](https://localhost:5000) to see your graphs
+
+![result](./flask/result.png)
