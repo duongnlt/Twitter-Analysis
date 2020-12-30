@@ -1,173 +1,174 @@
 <html>
-  <head>
+
+<head>
     <title>linearMLstream</title>
 
     <style>
-      .row {
-        display: block;
-      }
-
-      .chart-wrapper {
-        display: inline-block;
-        height: 600px;
-        width: 600px;
-
-      }
+        .row {
+            display: block;
+        }
+        
+        .chart-wrapper {
+            display: inline-block;
+            height: 600px;
+            width: 600px;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-  </head>
-  <body>
+</head>
+
+<body>
     <div>
-      <div class="row">
-        <div class="chart-wrapper">
-          <canvas id="trump-pie"></canvas>
+        <div class="row">
+            <div class="chart-wrapper">
+                <canvas id="trump-pie"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="biden-pie"></canvas>
+            </div>
         </div>
-        <div class="chart-wrapper">
-          <canvas id="biden-pie"></canvas>
+        <div class="row">
+            <div class="chart-wrapper">
+                <canvas id="trump-line"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="biden-line"></canvas>
+            </div>
+            <div class="row"></div>
         </div>
-      </div>
-      <div class="row">
-        <div class="chart-wrapper">
-          <canvas id="trump-line"></canvas>
-        </div>
-        <div class="chart-wrapper">
-          <canvas id="biden-line"></canvas>
-      </div>
-      <div class="row"></div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <!--suppress JSUnresolvedLibraryURL -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
-    <script>
-      // $(document).ready(function(){
-        var configTrumpPie = {
-          type: 'pie',
-          data: {
-            datasets: [{
-              data: [],
-              backgroundColor: [
-                'rgb(255, 99, 132)',
-                'rgb(54, 162, 235)',
-                'rgb(75, 192, 192)'
-              ],
-              label: 'Trump Pie'
-            }],
-            labels: [
-              'Negative',
-              'Neutral',
-              'Positive'
-            ]
-          },
-          options: {
-            reponsive: true,
-            title: {
-                    display: true,
-                    text: 'Trump Tweets'
-            },
-            plugins: [{
-              labels: {
-                render: 'percentage'
-              }
-            }]
-          }
-        };
-
-        var contextTrumpPie = document.getElementById('trump-pie').getContext('2d');
-        var trumpPie = new Chart(contextTrumpPie, configTrumpPie)
-
-
-
-
-
-
-
-        var configBidenPie = {
-          type: 'pie',
-          data: {
-            datasets: [{
-              data: [],
-              backgroundColor: [
-                'rgb(255, 99, 132)',
-                'rgb(54, 162, 235)',
-                'rgb(75, 192, 192)'
-              ],
-              label: 'Trump Pie'
-            }],
-            labels: [
-              'Negative',
-              'Neutral',
-              'Positive'
-            ]
-          },
-          options: {
-            reponsive: true,
-            title: {
-                    display: true,
-                    text: 'Biden Tweets'
-            },
-            plugins: [{
-              labels: {
-                render: 'percentage'
-              }
-            }]
-          }
-        };
-
-        var contextBidenPie = document.getElementById('biden-pie').getContext('2d');
-        var bidenPie = new Chart(contextBidenPie, configBidenPie)
-
-
-
-        var bidenLineConfig = {
-          type: 'line',
-          data: {
-            labels: [],
-            datasets: [{
-              label: "Negative",
-              backgroundColor: 'rgb(255, 99, 132)',
-              borderColor: 'rgb(255, 99, 132)',
-              data: [],
-              fill: false
-            },{
-              label: "Positive",
-              backgroundColor: 'rgb(75, 192, 192)',
-              borderColor: 'rgb(75, 192, 192)',
-              data: [],
-              fill: false
-            }]
-          },
-          options: {
-                responsive: true,
-                title: {
-                    display: true,
-                    text: 'Biden Negative vs Positive Tweets'
-                },
-                tooltips: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                hover: {
-                    mode: 'nearest',
-                    intersect: true
-                },
-                scales: {
-                    xAxes: [{
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Time'
-                        }
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+        <!--suppress JSUnresolvedLibraryURL -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
+        <script>
+            // $(document).ready(function(){
+            var configTrumpPie = {
+                type: 'pie',
+                data: {
+                    datasets: [{
+                        data: [],
+                        backgroundColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(54, 162, 235)',
+                            'rgb(75, 192, 192)'
+                        ],
+                        label: 'Trump Pie'
                     }],
-                    yAxes: [{
+                    labels: [
+                        'Negative',
+                        'Neutral',
+                        'Positive'
+                    ]
+                },
+                options: {
+                    reponsive: true,
+                    title: {
                         display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Value'
+                        text: 'Trump Tweets'
+                    },
+                    plugins: [{
+                        labels: {
+                            render: 'percentage'
                         }
                     }]
                 }
-              }
+            };
+
+            var contextTrumpPie = document.getElementById('trump-pie').getContext('2d');
+            var trumpPie = new Chart(contextTrumpPie, configTrumpPie)
+
+
+
+
+
+
+
+            var configBidenPie = {
+                type: 'pie',
+                data: {
+                    datasets: [{
+                        data: [],
+                        backgroundColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(54, 162, 235)',
+                            'rgb(75, 192, 192)'
+                        ],
+                        label: 'Trump Pie'
+                    }],
+                    labels: [
+                        'Negative',
+                        'Neutral',
+                        'Positive'
+                    ]
+                },
+                options: {
+                    reponsive: true,
+                    title: {
+                        display: true,
+                        text: 'Biden Tweets'
+                    },
+                    plugins: [{
+                        labels: {
+                            render: 'percentage'
+                        }
+                    }]
+                }
+            };
+
+            var contextBidenPie = document.getElementById('biden-pie').getContext('2d');
+            var bidenPie = new Chart(contextBidenPie, configBidenPie)
+
+
+
+            var bidenLineConfig = {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: "Negative",
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: [],
+                        fill: false
+                    }, {
+                        label: "Positive",
+                        backgroundColor: 'rgb(75, 192, 192)',
+                        borderColor: 'rgb(75, 192, 192)',
+                        data: [],
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                        text: 'Biden Negative vs Positive Tweets'
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: true
+                    },
+                    scales: {
+                        xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Time'
+                            }
+                        }],
+                        yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Value'
+                            }
+                        }]
+                    }
+                }
             }
 
             var bidenLineContext = document.getElementById('biden-line').getContext('2d');
@@ -177,129 +178,116 @@
 
 
             var trumpLineConfig = {
-          type: 'line',
-          data: {
-            labels: [],
-            datasets: [{
-              label: "Negative",
-              backgroundColor: 'rgb(255, 99, 132)',
-              borderColor: 'rgb(255, 99, 132)',
-              data: [],
-              fill: false
-            },{
-              label: "Positive",
-              backgroundColor: 'rgb(75, 192, 192)',
-              borderColor: 'rgb(75, 192, 192)',
-              data: [],
-              fill: false
-            }]
-          },
-          options: {
-                responsive: true,
-                title: {
-                    display: true,
-                    text: 'Trump Negative vs Positive Tweets'
-                },
-                tooltips: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                hover: {
-                    mode: 'nearest',
-                    intersect: true
-                },
-                scales: {
-                    xAxes: [{
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Time'
-                        }
-                    }],
-                    yAxes: [{
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Value'
-                        }
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: "Negative",
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: [],
+                        fill: false
+                    }, {
+                        label: "Positive",
+                        backgroundColor: 'rgb(75, 192, 192)',
+                        borderColor: 'rgb(75, 192, 192)',
+                        data: [],
+                        fill: false
                     }]
+                },
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                        text: 'Trump Negative vs Positive Tweets'
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: true
+                    },
+                    scales: {
+                        xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Time'
+                            }
+                        }],
+                        yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Value'
+                            }
+                        }]
+                    }
                 }
-              }
             }
 
             var trumpLineContext = document.getElementById('trump-line').getContext('2d');
             var trumpLineChart = new Chart(trumpLineContext, trumpLineConfig)
+            var source = new EventSource("/trump-data")
+            var sourceBiden = new EventSource("/biden-data")
+
+            source.onmessage = function(event) {
+                const data = JSON.parse(event.data)
+                    // if (bidenLineConfig.data.labels.length === 20) {
+                    //       bidenLineConfig.data.labels.shift();
+                    //       bidenLineConfig.data.datasets[0].data.shift();
+                    //       bidenLineConfig.data.datasets[1].data.shift()
+                    // }
+                if (trumpLineConfig.data.labels.length === 20) {
+                    trumpLineConfig.data.labels.shift();
+                    trumpLineConfig.data.datasets[0].data.shift();
+                    trumpLineConfig.data.datasets[1].data.shift()
+                }
 
 
+                // console.log(data)
+                var temp = [data.negative, data.neutral, data.positive]
+                configTrumpPie.data.datasets[0].data = temp
+                    // configBidenPie.data.datasets[0].data = temp
+                    // console.log(config.data.datasets[0].data)
+                    // bidenLineConfig.data.labels.push(data.time);
+                    // bidenLineConfig.data.datasets[0].data.push(data.negative);
+                    // bidenLineConfig.data.datasets[1].data.push(data.positive);
+
+                trumpLineConfig.data.labels.push(data.time);
+                trumpLineConfig.data.datasets[0].data.push(data.negative);
+                trumpLineConfig.data.datasets[1].data.push(data.positive);
+
+                trumpPie.update()
+                    // bidenPie.update()
+                    // bidenLineChart.update()
+                trumpLineChart.update()
+            }
+
+            sourceBiden.onmessage = function(event) {
+                const data = JSON.parse(event.data)
+
+                if (bidenLineConfig.data.labels.length === 20) {
+                    bidenLineConfig.data.labels.shift();
+                    bidenLineConfig.data.datasets[0].data.shift();
+                    bidenLineConfig.data.datasets[1].data.shift()
+                }
+                var temp = [data.negative, data.neutral, data.positive]
+                bidenLineConfig.data.labels.push(data.time);
+                bidenLineConfig.data.datasets[0].data.push(data.negative);
+                bidenLineConfig.data.datasets[1].data.push(data.positive);
+
+                configBidenPie.data.datasets[0].data = temp
+                bidenPie.update()
+                bidenLineChart.update()
+
+            }
 
 
+            // })
+        </script>
+</body>
 
-
-
-
-
-
-
-
-
-        var source = new EventSource("/trump-data")
-        var sourceBiden = new EventSource("/biden-data")
-
-        source.onmessage = function(event){
-          const data = JSON.parse(event.data)
-          // if (bidenLineConfig.data.labels.length === 20) {
-          //       bidenLineConfig.data.labels.shift();
-          //       bidenLineConfig.data.datasets[0].data.shift();
-          //       bidenLineConfig.data.datasets[1].data.shift()
-          // }
-          if (trumpLineConfig.data.labels.length === 20) {
-                trumpLineConfig.data.labels.shift();
-                trumpLineConfig.data.datasets[0].data.shift();
-                trumpLineConfig.data.datasets[1].data.shift()
-          }
-
-
-          // console.log(data)
-          var temp = [data.negative, data.neutral, data.positive]
-          configTrumpPie.data.datasets[0].data = temp
-          // configBidenPie.data.datasets[0].data = temp
-          // console.log(config.data.datasets[0].data)
-          // bidenLineConfig.data.labels.push(data.time);
-          // bidenLineConfig.data.datasets[0].data.push(data.negative);
-          // bidenLineConfig.data.datasets[1].data.push(data.positive);
-
-          trumpLineConfig.data.labels.push(data.time);
-          trumpLineConfig.data.datasets[0].data.push(data.negative);
-          trumpLineConfig.data.datasets[1].data.push(data.positive);
-
-          trumpPie.update()
-          // bidenPie.update()
-          // bidenLineChart.update()
-          trumpLineChart.update()
-        }
-
-        sourceBiden.onmessage = function (event){
-          const data = JSON.parse(event.data)
-
-          if (bidenLineConfig.data.labels.length === 20) {
-                bidenLineConfig.data.labels.shift();
-                bidenLineConfig.data.datasets[0].data.shift();
-                bidenLineConfig.data.datasets[1].data.shift()
-          }
-          var temp = [data.negative, data.neutral, data.positive]
-          bidenLineConfig.data.labels.push(data.time);
-          bidenLineConfig.data.datasets[0].data.push(data.negative);
-          bidenLineConfig.data.datasets[1].data.push(data.positive);
-
-          configBidenPie.data.datasets[0].data = temp
-          bidenPie.update()
-          bidenLineChart.update()
-
-        }
-
-
-      // })
-      
-    </script>
-  </body>
 </html>

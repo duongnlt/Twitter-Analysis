@@ -23,7 +23,7 @@ def biden_data():
         #         {'negative': neg, 'neutral': neu, 'positive': pos, 'time': datetime.now().strftime('%Y-%m-%d %H:%M:%S')}) 
         #     yield f"data:{json_data}\n\n"
         #     time.sleep(1)
-        consumer_biden = KafkaConsumer('biden_visualize', bootstrap_servers=['localhost:19092'])
+        consumer_biden = KafkaConsumer('biden_visualize', bootstrap_servers=['kafka:9092'])
         pos = neg = neu = 0
         for msg in consumer_biden:
             data = json.loads(msg.value)
@@ -42,7 +42,7 @@ def biden_data():
 def trump_data():
     def generate_random_data():
         pos = neg = neu = 0
-        consumer_trump = KafkaConsumer('trump_visualize', bootstrap_servers=['localhost:19092'])
+        consumer_trump = KafkaConsumer('trump_visualize', bootstrap_servers=['kafka:9092'])
         while True:
             for msg in consumer_trump:
                 data = json.loads(msg.value)
