@@ -34,13 +34,5 @@ Open Pyspark Notebook, run file **spark_streaming.ipynb** then **hadoop_stream.i
 
 
 ## 3. Visualize
-Run Flask server (make sure kafka has data first):
-```
-cd flask
-
-export FLASK_APP=app.py
-
-flask run
-```
 
 Go to [this url](https://localhost:5000) to see your graphs
