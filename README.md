@@ -2,6 +2,12 @@
 
 
 
+# Requirements
+This repo requires the following to run:
+- Node.js
+- Docker and docker-compose
+- Python
+---
 ## 1. Getting Started
 
 First, please clone this repo
@@ -14,6 +20,8 @@ Run this script
 
 ``` bash
 cd Twitter-Analysis
+
+pip install -r requirements.txt
 
 cd streaming
 
@@ -30,9 +38,11 @@ Execute this script to get your docker running
  ``` 
 
 
-Open Pyspark Notebook, run file **spark_streaming.ipynb** then **hadoop_stream.ipynb**
+Open Pyspark Notebook, run file **Streaming Tweets in Spark.ipynb** then **Streaming Tweets from Hadoop.ipynb**
 
 
 ## 3. Visualize
 
 Go to [this url](https://localhost:5000) to see your graphs
+
+![result](./flask/result.png)
